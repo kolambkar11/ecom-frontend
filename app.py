@@ -13,7 +13,8 @@ def add_to_cart():
     id = request.args.get('id')
     product_id = request.args.get('product')
     print(id,product_id)
-    return "<h1>200</h1>"
+    cart.append()
+    return jsonify
 
 if __name__ == "__main__":
     app.run(debug=True,port=3000)
