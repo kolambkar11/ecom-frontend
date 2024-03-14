@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Products</title>
+</head>
+<body>
+    <a href="/cart">cart</a>
+    <h1>Products</h1>
+    <ul>
+        {% for product in products %}
+        <li>
+            <div class="product" id={{product.id}}>
+            {{ product.products }} - {{ product.price }}
+            <button class="add-to-cart-btn">Add to Cart</button>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var productContainers = document.querySelectorAll('.product');
+        productContainers.forEach(function(container) {
+            var productId = container.id.replace('product', ''); // Extract number from ID
+            var button = container.querySelector('.add-to-cart-btn');
+            button.setAttribute('data-product-id', productId);
+        });
+    });
+    </script>
+    
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    var addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+    addToCartButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            var productId = this.getAttribute('data-product-id'); // Get the product ID from the data attribute
+            addToCart(productId); // Call the addToCart function with the product ID
+        });
+    });
+});
+function addToCart(productId) {
+    fetch('/add-to-cart/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ product_id: productId, }) // update json query here
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        // Update UI or alert user based on response
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+}
+</script>

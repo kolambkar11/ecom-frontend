@@ -1,0 +1,6 @@
+<h1>Your Cart</h1>
+<ul>
+    {% for item in cart_items %}
+    <li>Product ID: {{ item }}</li>  <!-- Expand this with product details -->
+    {% endfor %}
+</ul>
